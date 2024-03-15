@@ -91,6 +91,13 @@ export const loginController = async (req, res) => {
     return res.status(200).send({
       success: true,
       message: "Login Successfull",
+      user:{
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+        address: user.address,
+      },
       token,
     });
   } catch (error) {

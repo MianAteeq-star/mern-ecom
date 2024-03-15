@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import toast from "react-hot-toast";
 import Layout from "../../components/Layout/Layout";
 import axios from "axios";
@@ -17,28 +17,25 @@ function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "/login",
-        {
-          email,
-          password,
-        }
-      );
+      const response = await axios.post("/login", {
+        email,
+        password,
+      });
       if (response && response.data.success) {
         toast.success(response.data && response.data.message);
-         setAuth({
+        setAuth({
           ...auth,
-           token: response.data.token,
-           user: response.data.user,
-         })
-         localStorage.setItem('auth', JSON.stringify(response.data))
+          user: response.data.user,
+          token: response.data.token,
+        });
+        localStorage.setItem("auth", JSON.stringify(response.data));
         navigate("/");
       } else {
         toast.error(response.data.message);
       }
     } catch (error) {
       console.log(error);
-      toast.error("Something went wrong while login user");
+      toast.error("Something went wrong ");
     }
   };
 
@@ -46,16 +43,12 @@ function Login() {
     <Layout>
       <section className="bg-gray-50 dark:bg-gray-900">
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-          <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+          <div className="w-full bg-white rounded-lg shadow-2xl dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                 Sign in to your account
               </h1>
-              <form
-                className="space-y-4 md:space-y-6"
-                action="#"
-                onSubmit={handleLogin}
-              >
+              <form className="space-y-4 md:space-y-6" onSubmit={handleLogin}>
                 <div>
                   <label
                     htmlFor="email"
@@ -112,9 +105,9 @@ function Login() {
                       </label>
                     </div>
                   </div>
-                  <a className="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500 cursor-pointer">
+                  <NavLink className="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500 cursor-pointer">
                     Forgot password?
-                  </a>
+                  </NavLink>
                 </div>
                 <button
                   type="submit"

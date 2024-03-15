@@ -22,9 +22,51 @@ function Header() {
   return (
     <>
       <header className="bg-[#121533] py-4 sm:px-10 px-6 font-[sans-serif] min-h-[70px] drop-shadow-2xl">
-        <div className="flex flex-wrap items-center lg:gap-y-2 gap-y-4 gap-x-4">
-          <div className="flex items-center ml-auto lg:order-1">
-            <ul className="flex">
+        <div className="flex  flex-wrap  items-center lg:gap-y-2 gap-y-4 gap-x-4">
+        <img src="./images/ecom.png" width={44} alt="" />
+          <ul
+            id="collapseMenu"
+            className={`${
+              isMenuOpen
+                ? "lg:flex"
+                : "lg:!flex lg:ml-8 max-lg:hidden max-lg:w-full lg:space-x-4 max-lg:space-y-2 max-lg:my-4"
+            }`}
+          >
+            <li className="max-lg:border-b max-lg:py-2 px-3">
+              <Link
+                to={"/"}
+                className="text-[#FFA726] hover:text-[#FFA726] text-[15px] block font-semibold"
+              >
+                Home
+              </Link>
+            </li>
+            <li className="max-lg:border-b max-lg:py-2 px-3">
+              <Link
+                to={"/category"}
+                className="text-[#FFA726] hover:text-[#FFA726] text-[15px] block font-semibold"
+              >
+                Category
+              </Link>
+            </li>
+            <li className="max-lg:border-b max-lg:py-2 px-3">
+              <Link
+                to={"/about"}
+                className="text-[#FFA726] hover:text-[#FFA726] text-[15px] block font-semibold"
+              >
+                About
+              </Link>
+            </li>
+            <li className="max-lg:border-b max-lg:py-2 px-3">
+              <Link
+                to={"/contact"}
+                className="text-[#FFA726] hover:text-[#FFA726] text-[15px] block font-semibold"
+              >
+                Contact
+              </Link>
+            </li>
+          </ul>
+          <div className="flex  items-center ml-auto lg:order-1">
+            <ul className="flex ">
               {!auth.user ? (
                 <>
                   <li className="max-lg:border-b max-lg:py-2 px-3">
@@ -46,62 +88,23 @@ function Header() {
                 </>
               ) : (
                 <>
-                  <div className="relative inline-block text-left">
-                    <div>
-                      <button
-                        type="button"
-                        className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                        id="menu-button"
-                        aria-expanded="true"
-                        aria-haspopup="true"
-                      >
-                        {auth?.user?.name}
-                        <svg
-                          className="-mr-1 h-5 w-5 text-gray-400"
-                          viewBox="0 0 20 20"
-                          fill="currentColor"
-                          aria-hidden="true"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
-                      </button>
-                    </div>
-
-                    <div
-                      className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                      role="menu"
-                      aria-orientation="vertical"
-                      aria-labelledby="menu-button"
-                      tabIndex={-1}
+                  <li className="max-lg:border-b max-lg:py-2 px-3" onClick={handleLogout}>
+                    <Link
+                      to={"/login"}
+                      className="text-[#FFA726] hover:text-[#FFA726] text-[15px] block font-semibold"
                     >
-                      <div className="py-1" role="none">
-                        {/* Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" */}
-                        <Link
-                          to={"/login"}
-                          className="text-gray-700 block px-4 py-2 text-sm"
-                          role="menuitem"
-                          id="menu-item-0"
-                          onClick={handleLogout}
-                          tabIndex={-1}
-                        >
-                          Logout
-                        </Link>
-                        <Link
-                          to={"/dashboard"}
-                          className="text-gray-700 block px-4 py-2 text-sm"
-                          role="menuitem"
-                          id="menu-item-1"
-                          tabIndex={-1}
-                        >
-                          Dashboard
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
+                      Logout
+                    </Link>
+                  </li>
+                  <li className="max-lg:border-b max-lg:py-2 px-3">
+                    <Link
+                      to={"/dashboard"}
+                      className="text-[#FFA726] hover:text-[#FFA726] text-[15px] block font-semibold"
+                    >
+                      Dashboard
+                    </Link>
+                  </li>
+                  
 
              
                 </>
@@ -149,47 +152,7 @@ function Header() {
               </svg>
             </button>
           </div>
-          <ul
-            id="collapseMenu"
-            className={`${
-              isMenuOpen
-                ? "lg:flex"
-                : "lg:!flex lg:ml-8 max-lg:hidden max-lg:w-full lg:space-x-4 max-lg:space-y-2 max-lg:my-4"
-            }`}
-          >
-            <li className="max-lg:border-b max-lg:py-2 px-3">
-              <Link
-                to={"/"}
-                className="text-[#FFA726] hover:text-[#FFA726] text-[15px] block font-semibold"
-              >
-                Home
-              </Link>
-            </li>
-            <li className="max-lg:border-b max-lg:py-2 px-3">
-              <Link
-                to={"/category"}
-                className="text-[#FFA726] hover:text-[#FFA726] text-[15px] block font-semibold"
-              >
-                Category
-              </Link>
-            </li>
-            <li className="max-lg:border-b max-lg:py-2 px-3">
-              <Link
-                to={"/about"}
-                className="text-[#FFA726] hover:text-[#FFA726] text-[15px] block font-semibold"
-              >
-                About
-              </Link>
-            </li>
-            <li className="max-lg:border-b max-lg:py-2 px-3">
-              <Link
-                to={"/contact"}
-                className="text-[#FFA726] hover:text-[#FFA726] text-[15px] block font-semibold"
-              >
-                Contact
-              </Link>
-            </li>
-          </ul>
+          
         </div>
       </header>
     </>
