@@ -27,10 +27,10 @@ const userModel = new mongoose.Schema({
     type:Number,
     default: 0
  },
-//  answer:{
-//     type:String,
-//     required:true,
-//  },
+ answer:{
+    type:String,
+    required:true,
+ },
 },
 {
 timestamps:true

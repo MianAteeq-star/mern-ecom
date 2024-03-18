@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/auth";
+import { Select, Option } from "@material-tailwind/react";
 
 function Header() {
   const [auth, setAuth] = useAuth();
@@ -23,7 +24,7 @@ function Header() {
     <>
       <header className="bg-[#121533] py-4 sm:px-10 px-6 font-[sans-serif] min-h-[70px] drop-shadow-2xl">
         <div className="flex  flex-wrap  items-center lg:gap-y-2 gap-y-4 gap-x-4">
-        <img src="./images/ecom.png" width={44} alt="" />
+          <img src="./images/ecom.png" width={44} alt="" />
           <ul
             id="collapseMenu"
             className={`${
@@ -65,7 +66,7 @@ function Header() {
               </Link>
             </li>
           </ul>
-          <div className="flex  items-center ml-auto lg:order-1">
+          <div className="flex  flex-wrap  items-center lg:gap-y-2 gap-y-4 gap-x-4">
             <ul className="flex ">
               {!auth.user ? (
                 <>
@@ -88,25 +89,37 @@ function Header() {
                 </>
               ) : (
                 <>
-                  <li className="max-lg:border-b max-lg:py-2 px-3" onClick={handleLogout}>
+                 <div className="flex flex-wrap">
+                 <li className="max-lg:border-b max-lg:py-2 px-3">
                     <Link
-                      to={"/login"}
-                      className="text-[#FFA726] hover:text-[#FFA726] text-[15px] block font-semibold"
+                      to={""}
+                      className="text-[#3fbaeb] hover:text-[#6837ee] text-[15px] block font-extrabold capitalize "
                     >
-                      Logout
+                      Hi 👋 {auth?.user?.name}
                     </Link>
+                    </li>
+                    <li
+                      className="max-lg:border-b max-lg:py-2 px-3"
+                      onClick={handleLogout}
+                    >
+                      <Link
+                        to={"/login"}
+                        className="text-[#FFA726] hover:text-[#FFA726] text-[15px] block font-semibold"
+                      >
+                        Logout
+                      </Link>
                   </li>
                   <li className="max-lg:border-b max-lg:py-2 px-3">
                     <Link
-                      to={"/dashboard"}
+                      to={`/dashboard/${auth?.user?.role === 1 ? 'admin' : "user"}`}
                       className="text-[#FFA726] hover:text-[#FFA726] text-[15px] block font-semibold"
                     >
                       Dashboard
                     </Link>
                   </li>
-                  
 
-             
+                 </div>
+                  
                 </>
               )}
             </ul>
@@ -152,7 +165,6 @@ function Header() {
               </svg>
             </button>
           </div>
-          
         </div>
       </header>
     </>

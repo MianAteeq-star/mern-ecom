@@ -1,35 +1,33 @@
+
+
 import React, { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link} from "react-router-dom";
 import toast from "react-hot-toast";
 import Layout from "../../components/Layout/Layout";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/auth";
 
-function Login() {
+function ForgotPassword() {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [answer, setAnswer] = useState("");
   const navigate = useNavigate();
-  const [auth, setAuth] = useAuth();
 
-  //  login form
+  //  Forgot Password form
 
-  const handleLogin = async (e) => {
+  const handleForgotPassword = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("/login", {
+      const response = await axios.post("/forgot-password", {
         email,
-        password,
+        newPassword,
+        answer
       });
       if (response && response.data.success) {
         toast.success(response.data && response.data.message);
-        setAuth({
-          ...auth,
-          user: response.data.user,
-          token: response.data.token,
-        });
+     
         localStorage.setItem("auth", JSON.stringify(response.data));
-        navigate("/");
+        navigate("/login");
       } else {
         toast.error(response.data.message);
       }
@@ -46,9 +44,9 @@ function Login() {
           <div className="w-full bg-white rounded-lg shadow-2xl dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-                Sign in to your account
+               Reset Your Password
               </h1>
-              <form className="space-y-4 md:space-y-6" onSubmit={handleLogin}>
+              <form className="space-y-4 md:space-y-6"  onSubmit={handleForgotPassword}>
                 <div>
                   <label
                     htmlFor="email"
@@ -69,61 +67,49 @@ function Login() {
                 </div>
                 <div>
                   <label
-                    htmlFor="password"
+                    htmlFor="Answer"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
-                    Password
+                  Answer
+                  </label>
+                  <input
+                    type="text"
+                    value={answer}
+                    onChange={(e) => setAnswer(e.target.value)}
+                    name="answer"
+                    id="answer"
+                    placeholder="Enter your Favorite Food Name 🍕🍔🍟"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    required
+                  />
+                </div>
+                <div>
+                  <label
+                    htmlFor="New Password"
+                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    New Password
                   </label>
                   <input
                     type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    name="password"
-                    id="password"
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    name="newPassword"
+                    id="newPassword"
                     placeholder="••••••••"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     required
                   />
                 </div>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-start">
-                    <div className="flex items-center h-5">
-                      <input
-                        id="remember"
-                        aria-describedby="remember"
-                        type="checkbox"
-                        className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
-                        required
-                      />
-                    </div>
-                    <div className="ml-3 text-sm">
-                      <label
-                        htmlFor="remember"
-                        className="text-gray-500 dark:text-gray-300 cursor-pointer"
-                      >
-                        Remember me
-                      </label>
-                    </div>
-                  </div>
-                  <NavLink to={"/forgot-password"} className="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500 cursor-pointer">
-                    Forgot password?
-                  </NavLink>
-                </div>
+               
                 <button
                   type="submit"
                   className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 >
-                  Sign in
-                </button>
-                <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                  Don’t have an account yet?{" "}
-                  <Link
-                    to={"/register"}
-                    className="font-medium text-blue-600 hover:underline dark:text-blue-500"
-                  >
-                    Sign up
+                  <Link to={""}>
+                    Reset Password Now!
                   </Link>
-                </p>
+                </button>
               </form>
             </div>
           </div>
@@ -133,4 +119,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default ForgotPassword;

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Layout from './Layout/Layout'
 import { useNavigate } from 'react-router-dom'
 
-function Spinner() {
+function Spinner({path = "login"}) {
     const [count,setCount] = useState(3)
     const navigate = useNavigate()
 
@@ -10,9 +10,9 @@ function Spinner() {
         const interval = setInterval(() => {
             setCount((pre)=> -- pre)
         }, 1000);
-       count ===0 && navigate('/login')
+       count ===0 && navigate(`/${path}`)
         return ()=> clearInterval(interval)
-    },[count,navigate])
+    },[count,navigate,path])
   return (
     <Layout title={"Spinner - Ecommerce App"}>
  <div className="flex items-center justify-center h-screen gap-4">
