@@ -4,6 +4,7 @@ import cors from "cors"
 import morgan from "morgan"
 import Mongodb from './db/Mongodb.js';
 import UserRoutes from './routes/UserRoutes.js'
+import CategoryRoutes from "./routes/CategoryRoutes.js"
 
 const app = express()
 
@@ -22,7 +23,7 @@ app.use(morgan("dev"))
 // ROuter
 
 app.use( UserRoutes)
-
+app.use(CategoryRoutes)
 
 app.get("/", (req, res) => {
     res.send("<h1>Welcome to ecommerce app</h1>");
