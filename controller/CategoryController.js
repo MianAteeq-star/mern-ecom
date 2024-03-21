@@ -48,14 +48,15 @@ export const updateCategoryController = async (req, res) => {
         message: "name is required",
       });
     }
-    const update = await CategoryModel.findByIdAndUpdate(id, {
+    const updateCategory = await CategoryModel.findByIdAndUpdate(id, {
       name,
       slug: slugify(name),
-    });
+      
+    },{new:true});
     res.status(201).send({
       success: true,
       message: "Category succesfully updated",
-      update,
+      updateCategory,
     });
   } catch (error) {
     console.log(error);
@@ -66,3 +67,67 @@ export const updateCategoryController = async (req, res) => {
     });
   }
 };
+
+// Get all categories
+
+export const getAllCategoryController = async (req, res) => {
+  try {
+    
+const getAll = await CategoryModel.find({})
+res.status(200).send({
+  success: true,
+  message: "Category succesfully fetched",
+  getAll,
+})
+
+  } catch (error) {
+    console.log('error ', error )
+    
+    res.status(500).send({
+      success: false,
+      error,
+      message: "error in getAllCategoryController",
+    })
+  }
+}
+// Get one category
+export const getSingleCategoryController = async(req, res) => {
+  try {
+   
+    const getSingleCategory = await CategoryModel.findOne({slug: req.params.slug})
+    console.log('getSingleCategory', getSingleCategory)
+    res.status(200).send({
+      success: true,
+      message: "Single Category  succesfully fetched",
+      getSingleCategory,
+    })
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      error,
+      message: "error in getSingleCategoryController",
+    })
+  }
+}
+//  Delete a category
+
+export const deleteCategoryController= async(req, res) => {
+  try {
+    const {id} =req.params
+    const deleteCategory = await CategoryModel.findByIdAndDelete(id)
+    res.status(200).send({
+      success: true,
+      message: "Category succesfully deleted",
+      deleteCategory,
+    })
+  } catch (error) {
+
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      error,
+      message: "error in deleteCategoryController",
+    })
+  }
+}
