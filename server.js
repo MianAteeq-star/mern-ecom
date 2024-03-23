@@ -5,6 +5,7 @@ import morgan from "morgan"
 import Mongodb from './db/Mongodb.js';
 import UserRoutes from './routes/UserRoutes.js'
 import CategoryRoutes from "./routes/CategoryRoutes.js"
+import ProductRoutes from "./routes/ProductRoutes.js"
 
 const app = express()
 
@@ -24,6 +25,7 @@ app.use(morgan("dev"))
 
 app.use( UserRoutes)
 app.use(CategoryRoutes)
+app.use(ProductRoutes)
 
 app.get("/", (req, res) => {
     res.send("<h1>Welcome to ecommerce app</h1>");
