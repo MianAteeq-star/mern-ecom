@@ -38,7 +38,7 @@ function Header() {
             </svg>
           </button>
 
-          <img src="./images/ecom.png" width={44} alt="" />
+          <img src="./images/ecom.png" width={50} alt="" />
           <ul
             id="collapseMenu"
             className={`${
