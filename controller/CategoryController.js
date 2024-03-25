@@ -25,7 +25,7 @@ export const createCategoryController = async (req, res) => {
 
     res.status(201).send({
       success: true,
-      message: "Category succesfully created",
+      message: "Category Succesfully Created",
       newCategory,
     });
   } catch (error) {
@@ -55,7 +55,7 @@ export const updateCategoryController = async (req, res) => {
     },{new:true});
     res.status(201).send({
       success: true,
-      message: "Category succesfully updated",
+      message: "Category Succesfully Updated",
       updateCategory,
     });
   } catch (error) {
@@ -76,7 +76,7 @@ export const getAllCategoryController = async (req, res) => {
 const getAll = await CategoryModel.find({})
 res.status(200).send({
   success: true,
-  message: "Category succesfully fetched",
+  message: "Category Succesfully Fetched",
   getAll,
 })
 
@@ -98,7 +98,7 @@ export const getSingleCategoryController = async(req, res) => {
     console.log('getSingleCategory', getSingleCategory)
     res.status(200).send({
       success: true,
-      message: "Single Category  succesfully fetched",
+      message: "Single Category  Succesfully Fetched",
       getSingleCategory,
     })
   } catch (error) {
@@ -118,7 +118,7 @@ export const deleteCategoryController= async(req, res) => {
     const deleteCategory = await CategoryModel.findByIdAndDelete(id)
     res.status(200).send({
       success: true,
-      message: "Category succesfully deleted",
+      message: "Category  Deleted Succesfully",
       deleteCategory,
     })
   } catch (error) {

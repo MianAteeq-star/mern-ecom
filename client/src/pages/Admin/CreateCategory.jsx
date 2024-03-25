@@ -3,16 +3,17 @@ import Layout from "../../components/Layout/Layout";
 import AdminMenu from "../../components/Layout/AdminMenu";
 import toast from "react-hot-toast";
 import axios from "axios";
-import { Button, Space, Tooltip } from 'antd';
+import { Button,Modal, Space, Tooltip, message } from "antd";
 import CategoryForm from "../../components/Form/CategoryForm";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 
-
 function CreateCategory() {
   const [category, setCategory] = useState([]);
-  const [name,setName ]= useState("")
-
-  const getAllCategory = async (req, res) => {
+  const [name, setName] = useState("");
+  const [modelOpen, setModelOpen] = useState(false);
+  const [select, setSelect] = useState(null)
+  const [updatedName, setUpdatedName] = useState("")
+  const getAllCategory = async () => {
     try {
       const { data } = await axios("/getall-category");
       if (data.success) {
@@ -32,11 +33,11 @@ function CreateCategory() {
   const createCategory = async (e) => {
     e.preventDefault();
     try {
-      const {data} = await axios.post('/create-category',{name})
-      if(data?.success){
-        toast.success(`${name} ${data.message}`)
-        getAllCategory()
-        setName(" ")
+      const { data } = await axios.post("/create-category", { name });
+      if (data?.success) {
+        toast.success(`${name} ${data.message}`);
+        getAllCategory();
+        setName(" ");
       }
     } catch (error) {
       console.log(error);
@@ -48,9 +49,9 @@ function CreateCategory() {
   const handleDelete = async (id) => {
     try {
       const res = await axios.delete(`/delete-category/${id}`);
-      if(res.data.success){
-        toast.success(res.data.message)
-        getAllCategory()
+      if (res.data.success) {
+        toast.success(res.data.message);
+        getAllCategory();
       }
     } catch (error) {
       console.log(error);
@@ -60,8 +61,26 @@ function CreateCategory() {
 
   // Update
 
-  const handleUpdate = () => {
-    console.log("updated");
+
+  const handleUpdate = async(e) => {
+    e.preventDefault()
+    try {
+      const res = await axios.put(`/update-category/${select._id}`, { name: updatedName})
+      if (res.data.success) {
+        toast.success(res.data.message);
+        setModelOpen(false);
+       setUpdatedName("")
+       setSelect(null)
+        getAllCategory();
+    }
+    else{
+      message.error(res.data.message)
+    }
+   } catch (error) {
+      console.log(error);
+      message.error("Something went wrong while updating category")
+      
+    }
   };
   return (
     <Layout>
@@ -77,10 +96,16 @@ function CreateCategory() {
               <h2 className="text-center text-4xl mb-4 bg-slate-500 p-4 rounded-lg">
                 Manage Categories
               </h2>
-              <CategoryForm handleSubmit={createCategory} value={name} setValue={setName}   />
+
+              <CategoryForm
+                handleSubmit={createCategory}
+                value={name}
+                setValue={setName}
+              />
+
               <table className="min-w-full bg-cyan-400 shadow-2xl rounded-xl p-4">
                 <thead>
-                  <tr className="bg-blue-gray-100 text-gray-700">
+                  <tr className="bg-blue-gray-100 text-gray-700 border-b border-blue-gray-200">
                     <th className="py-3 px-4 text-left"> #</th>
                     <th className="py-3 px-4 text-left"> Name</th>
 
@@ -90,52 +115,33 @@ function CreateCategory() {
                 <tbody className="text-blue-gray-900">
                   {category.map((categ, i) => (
                     <>
-
                       <tr className="border-b border-blue-gray-200">
-                      <th>{ i + 1}</th>
+                        <th>{i + 1}</th>
                         <td key={categ._id} className="py-3 px-4">
                           {categ.name}
                         </td>
 
                         <td>
                           <Space>
-                            <Tooltip title="Delete" color='red'><Button className="text-red-600 border-black" icon={<DeleteOutlined />} onClick={() => { handleDelete(categ._id) }} /></Tooltip>
-                            <Tooltip title="Edit"><Button type="primary" className="text-blue-500 border-black" icon={<EditOutlined />}  onClick={handleUpdate} /></Tooltip>
+                            <Tooltip title="Delete" color="red">
+                              <Button
+                                className="text-red-600 border-black"
+                                icon={<DeleteOutlined />}
+                                onClick={() => {
+                                  handleDelete(categ._id);
+                                }}
+                              />
+                            </Tooltip>
+                            <Tooltip title="Edit">
+                              <Button
+                                type="primary"
+                                className="text-blue-500 border-black"
+                                icon={<EditOutlined />}
+                              onClick={()=> {setModelOpen(true); setUpdatedName(categ.name); setSelect(categ)}}
+                              />
+                            </Tooltip>
                           </Space>
                         </td>
-
-                        {/* <td className="py-3 px-4">
-                          <div className="group inline-block">
-                            <button className="outline-none focus:outline-none border px-3 py-1 bg-white rounded-sm flex items-center min-w-14">
-                              <span className="pr-1 flex-1 font-medium text-blue-600 hover:text-blue-800">
-                                Edit
-                              </span>
-                              <span>
-                                <svg
-                                  className="fill-current h-4 w-4 transform group-hover:-rotate-180 transition duration-150 ease-in-out"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  viewBox="0 0 20 20"
-                                >
-                                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                                </svg>
-                              </span>
-                            </button>
-                            <ul className="bg-white border rounded-sm transform scale-0 group-hover:scale-100 absolute  transition duration-150 ease-in-out origin-top min-w-32">
-                              <li
-                                className="rounded-sm px-3 py-1 hover:bg-blue-600 cursor-pointer font-medium"
-                                onClick={handleUpdate}
-                              >
-                                Update
-                              </li>
-                              <li
-                                className="rounded-sm px-3 py-1 cursor-pointer hover:bg-red-600 font-medium"
-                                onClick={()=> handleDelete(categ._id)}
-                              >
-                                Delete
-                              </li>
-                            </ul>
-                          </div>
-                        </td> */}
                       </tr>
                     </>
                   ))}
@@ -144,6 +150,16 @@ function CreateCategory() {
             </div>
           </div>
         </div>
+
+        <Modal
+         
+       
+          onCancel={()=> setModelOpen(false)}
+          footer={null}
+          visible={modelOpen}
+        >
+         <CategoryForm value={updatedName} setValue={setUpdatedName} handleSubmit={handleUpdate}/>
+        </Modal>
       </div>
     </Layout>
   );
