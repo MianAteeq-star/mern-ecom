@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import Layout from './Layout/Layout'
 import { useNavigate } from 'react-router-dom'
+import { LoadingOutlined } from '@ant-design/icons';
+import { Spin } from 'antd';
 
 function Spinner({path = "login"}) {
     const [count,setCount] = useState(3)
@@ -16,15 +18,23 @@ function Spinner({path = "login"}) {
   return (
     <Layout title={"Spinner - Ecommerce App"}>
  <div className="flex items-center justify-center h-screen gap-4">
-  <div className='text-3xl' >
+  <div className='text-2xl' >
    Go to Login page in  {count} seconds
   </div>
-  <div className="relative">
-    <div className="h-24 w-24 rounded-full border-t-8 border-b-8 border-gray-200" />
-    <div className="absolute top-0 left-0 h-24 w-24 rounded-full border-t-8 border-b-8 border-blue-500 animate-spin">
-    </div>
+  <Spin
+    indicator={
+      <LoadingOutlined
+        style={{
+          fontSize: 40,
+        }}
+        spin
+      />
+    }
+  />
+
+
+
   </div>
-</div>
 
     </Layout>
   )

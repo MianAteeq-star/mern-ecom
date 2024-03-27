@@ -98,6 +98,9 @@ function CreateCategory() {
               </h2>
 
               <CategoryForm
+            
+              
+             
                 handleSubmit={createCategory}
                 value={name}
                 setValue={setName}
@@ -106,7 +109,7 @@ function CreateCategory() {
               <table className="min-w-full bg-cyan-400 shadow-2xl rounded-xl p-4">
                 <thead>
                   <tr className="bg-blue-gray-100 text-gray-700 border-b border-blue-gray-200">
-                    <th className="py-3 px-4 text-left"> #</th>
+                    <th className="py-3 px-4 text-left font-bold"> #</th>
                     <th className="py-3 px-4 text-left"> Name</th>
 
                     <th className="py-3 px-4 text-left">Action</th>
@@ -116,7 +119,7 @@ function CreateCategory() {
                   {category.map((categ, i) => (
                     <>
                       <tr className="border-b border-blue-gray-200">
-                        <th>{i + 1}</th>
+                        <td className="py-3 px-4 font-bold" >{i + 1}</td>
                         <td key={categ._id} className="py-3 px-4">
                           {categ.name}
                         </td>
