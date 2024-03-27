@@ -3,23 +3,28 @@ import Layout from "../../components/Layout/Layout";
 import AdminMenu from "../../components/Layout/AdminMenu";
 import { Button, Select, message } from "antd";
 import axios from "axios";
-import { Option } from "antd/es/mentions";
+import { useNavigate } from "react-router-dom";
+const {Option } = Select
 
 function CreateProduct() {
+
+  const navigate = useNavigate()
   const [categories, setCategories] = useState([]);
-  const [price, setPrice] = useState("");
+  const [price, setPrice] = useState();
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [photo, setPhoto] = useState("");
   const [quantity, setQuantity] = useState("");
   const [name, setName] = useState("");
   const [shipping, setShipping] = useState(true);
+  
 
   const getAllCategory = async () => {
     try {
       const { data } = await axios("/getall-category");
-      if (data.success) {
-        setCategories(data.getAll); // from category controller
+      if (data?.success) {
+        setCategories(data?.getAll); // from category controller
+        console.log(categories);
       }
     } catch (error) {
       console.log(error);
@@ -48,18 +53,15 @@ function CreateProduct() {
     productData.append('category', category)
 
     try {
-      const res = await axios.post('/create-products', productData)
-      if(res?.success){
-        // message.success(`${name} ${res.message}`)
-        getAllCategory()
-        setCategories(res.data.product)
-        setName(" ")
-        setDescription("")
-        setShipping("")
-        setPrice("")
-        setQuantity("")
-        message.success("successfully created")
-      }
+      const {data} = await axios.post('/create-products', productData)
+    if (data?.success) {
+      message.success(data?.message)
+      navigate("/dashboard/admin/products")
+    }
+    else{
+      message.error(data?.message)
+      
+    }
     } catch (error) {
       console.log(error);
       message.error("Something went wrong while creating product");
@@ -68,25 +70,7 @@ function CreateProduct() {
   }
 
 
-  // Get Products
-
-  const getAllProducts = async () => { 
-
-    try {
-      const { data } = await axios("/getAll-products");
-      if (data.success) {
-        setCategories(data.getAllProducts); // from product controller
-      }
-    } catch (error) {
-      console.log(error);
-      message.error("Something went wrong while getting all products");
-      
-    }
-  }
-
-  useEffect(()=>{
-    getAllProducts()
-  },[])
+  
 
   return (
     <Layout>
@@ -113,7 +97,7 @@ function CreateProduct() {
                 onSearch={onSearch}
                 className="w-72 mb-6"
               >
-                {categories.map((categ) => (
+                {categories?.map((categ) => (
                   <Option key={categ._id} value={categ._id}>
                     {categ.name}
                   </Option>
