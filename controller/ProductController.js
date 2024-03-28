@@ -12,8 +12,8 @@ export const createProductController = async (req, res) => {
       case !name:
         return res.status(500).send({ error: "Name is required" });
 
-      //   case !description:
-      //     return res.status(500).send({ error: "Description is Required" });
+        case !description:
+          return res.status(500).send({ error: "Description is Required" });
       case !price:
         return res.status(500).send({ error: "Price is Required" });
 
@@ -120,6 +120,9 @@ export const getAllProductsController = async (req, res) => {
   }
 };
 
+
+//  Get Single Product
+
 export const getSingleProductController = async (req, res) => {
   try {
  const getSingleProduct = await ProductModel.findOne({slug: req.params.slug}).populate("category").select("-photo")
@@ -140,7 +143,7 @@ export const getSingleProductController = async (req, res) => {
 };
 
 
-
+//  Get Photo 
 
 export const getPhotoController = async (req, res) => {
 try {

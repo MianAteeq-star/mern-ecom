@@ -3,8 +3,9 @@ import Layout from "../../components/Layout/Layout";
 import { Button, Space, Tooltip, message } from "antd";
 import axios from "axios";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 
-function Products() {
+function Product() {
   const [products, setProducts] = useState([]);
 
   const getAllProducts = async () => {
@@ -22,61 +23,73 @@ function Products() {
   useEffect(() => {
     getAllProducts();
   }, []);
-  return (
-    <Layout>
-      <div>Products</div>
-      {products.map((pro) => (
-        <div className="flex w-full items-center justify-center gap-6">
 
-        <div key={pro._id} className=" p-6    rounded-xl bg-red-600 bg-clip-border text-gray-700 shadow-md">
-          <div className="  h-96 overflow-hidden rounded-xl bg-white bg-clip-border text-gray-700">
-            {pro.photo}
+//  Handle Delete Products
+//  
+  return (
+    <Layout >
+      <div>Product</div>
+        <div className="flex w-full p-6  gap-6 bg-red-600 ">
+      {products.map((pro) => (
+
+<Link to={`/dashboard/admin/product/${pro.slug}`} key={pro._id} >
+          <div className="  min-h-96 overflow-hidden rounded-xl bg-white bg-clip-border shadow-2xl my-6 text-gray-700">
+            <div className="flex justify-center p-6 "> 
+
+            <img src={`/get-photo/${pro._id}`}className="" width={"300px"} alt="" />
+            </div>
             <div className="p-6">
-              <div className="mb-2 flex items-center justify-between">
-                <h3 className="block font-sans text-base font-medium leading-relaxed text-blue-gray-900 antialiased">
-                  {pro.name}
-                </h3>
-                <div className="block font-sans text-base font-medium leading-relaxed text-blue-gray-900 antialiased">
+        <div className="mb-2 flex items-center gap-5 justify-between">
+                <div>
+
+                <span className=" font-bold text-xl"> {pro.name}  </span>
+                </div>
+                
+                {/* <div className="block font-sans text-base font-medium leading-relaxed text-blue-gray-900 antialiased">
                   <Space>
                     <Tooltip title="Delete" color="red">
                       <Button
                         className="text-red-600 border-black"
                         icon={<DeleteOutlined />}
+                        // onClick={()=> handleDelete(pro._id)}
+                        
                         />
                     </Tooltip>
-                    <Tooltip title="Edit">
+                    <Tooltip title="Edit" color="green">
                       <Button
                         type="primary"
                         className="text-blue-500 border-black"
                         icon={<EditOutlined />}
+                        // onClick={navigate("/dashboard/admin/update-product")}
                         />
                     </Tooltip>
                   </Space>
-                </div>
+                </div> */}
               </div>
+
               <p className="block font-sans text-sm font-normal leading-normal text-gray-700 antialiased opacity-75">
-                Quantity : {pro.quantity}
+                <span className=" font-bold text-lg"> Quantity :   </span> {pro.quantity}
               </p>
               <p className="block font-sans text-sm font-normal leading-normal text-gray-700 antialiased opacity-75">
-                Price : {pro.price}$
+              <span className=" font-bold text-lg"> Price :   </span>{pro.price} <span className="font-bold">$</span>
               </p>
               <p className="block font-sans text-sm font-normal leading-normal text-gray-700 antialiased opacity-75">
-                Description : {pro.description}$
+              <span className=" font-bold text-lg"> Description :   </span> {pro.description}
               </p>
               <p className="block font-sans text-sm font-normal leading-normal text-gray-700 antialiased opacity-75">
-                Created At : {pro.createdAt}
+              <span className=" font-bold text-lg"> Created At :   </span> {pro.createdAt}
               </p>
               <p className="block font-sans text-sm font-normal leading-normal text-gray-700 antialiased opacity-75">
-                Updated At : {pro.updatedAt}
+              <span className=" font-bold text-lg"> Updated At :   </span> {pro.updatedAt}
               </p>
             </div>
 
           </div>
-        </div>
-      </div>
+      </Link>
       ))}
+        </div>
     </Layout>
   );
 }
 
-export default Products;
+export default Product;

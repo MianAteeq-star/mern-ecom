@@ -6,7 +6,7 @@ function PageNotFound() {
     <Layout title={"Go to Home - Page Not found  ＞︿＜ ☹"}>
       <div className='flex justify-center items-center text-3xl min-h-screen min-w-full'>
     
-    <img src="./images/PNF.gif" alt="" />
+    <img src="./images/PNF.gif" alt="404 Page Not Found" />
 
       </div>
 </Layout>

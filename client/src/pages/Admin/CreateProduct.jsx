@@ -56,7 +56,7 @@ function CreateProduct() {
       const {data} = await axios.post('/create-products', productData)
     if (data?.success) {
       message.success(data?.message)
-      navigate("/dashboard/admin/products")
+      navigate("/dashboard/admin/product")
     }
     else{
       message.error(data?.message)
@@ -64,7 +64,8 @@ function CreateProduct() {
     }
     } catch (error) {
       console.log(error);
-      message.error("Something went wrong while creating product");
+      message.error(error);
+      
       
     }
   }
@@ -82,7 +83,7 @@ function CreateProduct() {
         <div className="w-8/12  p-4">
           {/* <!-- component --> */}
           <div className="flex min-h-screen items-center justify-center shadow-2xl">
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto p-6">
               <h2 className="text-center text-4xl mb-4 bg-slate-500 p-4 rounded-lg">
                 Manage Products
               </h2>
@@ -232,24 +233,8 @@ function CreateProduct() {
                     
 
                   </div>
-                  {/* <div>
-                    <label
-                      htmlFor="answer"
-                      className="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
-                    >
-                      Answer
-                    </label>
-                    <input
-                      type="answer"
-                      name="answer"
-                      id="answer"
-                      value={answer}
-                      onChange={(e) => setAnswer(e.target.value)}
-                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      placeholder="Enter your Favorite Food Name 🍕🍔🍟"
-                      required
-                    />
-                  </div> */}
+               
+                   
 
                   <div >
                   <Button type="dashed" className="bg-blue-600"  onClick={createProduct}>
@@ -260,16 +245,6 @@ function CreateProduct() {
                 </form>
               </div>
 
-              {/* <div className="mb-6">
-                {
-                  categories.map((pro)=>(
-                    <div key={pro._id} className="bg-white dark:bg-gray-800 p-4 rounded-lg">
-                      {pro.name}
-                      {pro.photo}
-                    </div>
-                  ))
-                }
-              </div> */}
             </div>
           </div>
         </div>
